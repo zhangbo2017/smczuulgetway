@@ -1,9 +1,6 @@
 package com.ibm.zuul.feigin;
 
-/**
- * @author PingXue
- *
- */
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -12,7 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ibm.zuul.bean.ResponseBean;
 
+/**
+ * @author BoZhang
+ * E-mail:dlzbo@cn.ibm.com
+ * @version date：May 15, 2020 2:11:29 PM
+*/
 @FeignClient(name = "SMC-Users")
+//@FeignClient(value="eureka-client")
 public interface SecurityFeignClient {
 	
     // verify admin role

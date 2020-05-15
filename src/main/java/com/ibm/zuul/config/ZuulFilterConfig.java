@@ -3,10 +3,12 @@ package com.ibm.zuul.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
 /**
- * @author PingXue
- *
- */
+ * @author BoZhang
+ * E-mail:dlzbo@cn.ibm.com
+ * @version date：May 15, 2020 2:12:22 PM
+*/
 @Configuration
 public class ZuulFilterConfig {
 	

@@ -9,7 +9,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableDiscoveryClient
 @EnableZuulProxy
-@EnableFeignClients(basePackages = "com.ibm.zuul.feigin")
+//@EnableFeignClients(basePackages = "com.ibm.zuul.feigin")
+@EnableFeignClients
 @SpringBootApplication
 public class ZuulApplication {
 

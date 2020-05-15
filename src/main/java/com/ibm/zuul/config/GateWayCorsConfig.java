@@ -1,15 +1,16 @@
 package com.ibm.zuul.config;
 
-/**
- * @author PingXue
- *
- */
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+/**
+ * @author BoZhang
+ * E-mail:dlzbo@cn.ibm.com
+ * @version date：May 15, 2020 2:11:51 PM
+*/
 @Configuration
 public class GateWayCorsConfig {
 	@Bean
