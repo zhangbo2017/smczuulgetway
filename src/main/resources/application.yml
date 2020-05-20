@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: prod
+    active: dev
   application:
     name: SMC-Zuul-Getway
 
@@ -22,7 +22,7 @@ zuul:
 
 feign:
   hystrix:
-    enabled: true
+    enabled: false
 
 
 hystrix:
@@ -35,7 +35,10 @@ hystrix:
 ribbon:
    ReadTimeout: 60000
    ConnectTimeout: 60000
-   MaxAutoRetriesNextServer: 0
+   MaxAutoRetries: 1 #同一台实例最大重试次数,不包括首次调用
+   MaxAutoRetriesNextServer: 1
+   eureka:
+     enable: true
 
 
 management:

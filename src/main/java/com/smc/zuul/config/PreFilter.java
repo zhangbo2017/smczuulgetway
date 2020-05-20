@@ -1,12 +1,13 @@
 /**
  * 
  */
-package com.ibm.zuul.config;
+package com.smc.zuul.config;
 
-import com.ibm.zuul.feigin.SecurityFeignClient;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import com.smc.zuul.feigin.SecurityFeignClient;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,8 +70,12 @@ public class PreFilter extends ZuulFilter {
 	    HttpServletRequest request = ctx.getRequest();
 	    String authHeader = request.getHeader("Authorization");
 	    log.debug("PreRequestFilter-run:Authorization = {}", authHeader);
-
-//	    if (StringUtils.isNotBlank(authHeader)) {
+	    System.out.println("PreFiltter authHeader: "+authHeader);
+	    if (StringUtils.isNotBlank(authHeader)) {
+	        // router the request
+	        ctx.setSendZuulResponse(true);
+	        ctx.setResponseStatusCode(OK.value());
+	        ctx.set("isSuccess", true);
 //	      HttpStatus authChkStatus = INTERNAL_SERVER_ERROR;
 //
 //	    	System.out.println("REQUESTURI >>>" + request.getRequestURI());
@@ -102,29 +107,29 @@ public class PreFilter extends ZuulFilter {
 //	        ctx.setResponseBody(authChkStatus.getReasonPhrase());
 //	        ctx.set("isSuccess", false);
 //	      }
-//	    } else {
-//	      // block the rquest
-//	      ctx.setSendZuulResponse(false);
-//	      ctx.setResponseStatusCode(403);
-//	      ctx.setResponseBody(INVALID_TOKEN);
-//	      ctx.set("isSuccess", false);
-//	    }
+	    } else {
+	      // block the rquest
+	      ctx.setSendZuulResponse(false);
+	      ctx.setResponseStatusCode(403);
+	      ctx.setResponseBody(INVALID_TOKEN);
+	      ctx.set("isSuccess", false);
+	    }
 	    
 //comment for test
 
-		    HttpStatus authChkStatus=HttpStatus.valueOf(Integer.valueOf(200));
-		      if (authChkStatus.equals(OK)) {
-		        // router the request
-		        ctx.setSendZuulResponse(true);
-		        ctx.setResponseStatusCode(OK.value());
-		        ctx.set("isSuccess", true);
-		      } else {
-		        // block the rquest
-		        ctx.setSendZuulResponse(false);
-		        ctx.setResponseStatusCode(authChkStatus.value());
-		        ctx.setResponseBody(authChkStatus.getReasonPhrase());
-		        ctx.set("isSuccess", false);
-		      }
+//		    HttpStatus authChkStatus=HttpStatus.valueOf(Integer.valueOf(200));
+//		      if (authChkStatus.equals(OK)) {
+//		        // router the request
+//		        ctx.setSendZuulResponse(true);
+//		        ctx.setResponseStatusCode(OK.value());
+//		        ctx.set("isSuccess", true);
+//		      } else {
+//		        // block the rquest
+//		        ctx.setSendZuulResponse(false);
+//		        ctx.setResponseStatusCode(authChkStatus.value());
+//		        ctx.setResponseBody(authChkStatus.getReasonPhrase());
+//		        ctx.set("isSuccess", false);
+//		      }
 //TEST END
 	    return null;
 	  }
