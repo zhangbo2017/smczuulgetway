@@ -93,10 +93,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter{
 	          UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), "N/A",
 	                                                                                                       userDetails.getAuthorities());
 	          authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-	          SecurityContextHolder.getContext().setAuthentication(authentication);
-	        }else{
-	        	request.setAttribute(authToken, null);
-	        }
+	          SecurityContextHolder.getContext().setAuthentication(authentication);}
+//	        else{
+//	        	request.setAttribute(authToken, null);
+//	        }
 	      }
 	    } catch (Exception e) {
 	     logger.debug("JwtAuthenticationTokenFilter:Exception");

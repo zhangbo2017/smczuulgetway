@@ -58,7 +58,6 @@ public class AuthController {
 	
   @RequestMapping(value="/login")
   public ResponseEntity<CommonResult> login(@RequestBody AuthRequest request) throws Exception {
-	  
 	Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 	SecurityContextHolder.getContext().setAuthentication(authentication);
 	HttpStatus authChkStatus=this.securityFeignClient.haslogin(request).getStatusCode();
