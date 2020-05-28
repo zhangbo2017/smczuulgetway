@@ -91,7 +91,7 @@ pipeline {
         // sh 'docker pull ${DOCKHUB_USERNAME}/smc-zuul-srv'
 
         // docker run images
-        sh 'docker run -d -p 8888:8888 -v smc-data:/smc-data --network smc-net --name smc-zuul-ctn ${DOCKHUB_USERNAME}/smc-zuul-srv -Xms128m -Xmx128m'
+        sh 'docker run -d -p 8888:8888 -v smc-data:/smc-data --network host --name smc-zuul-ctn ${DOCKHUB_USERNAME}/smc-zuul-srv -Xms128m -Xmx128m'
       }
     }
 
