@@ -59,6 +59,41 @@ pipeline {
         }
       }
     }
+    
+        // the following steps should be running on deploy server which should be different with previous server normally
+    // while we use the same server is just for demo purpose
+    stage('docker pull image and docker run image on docker/deploy server') {
+      agent any
+      steps {
+        // docker stop/rm older containers: remove only there are containers found
+        script {
+          def REMOVE_FLAG = sh(returnStdout: true, script: "docker container ls -aq --filter name=.*smc-zuul-ctn.*") != ""
+          echo "REMOVE_FLAG: ${REMOVE_FLAG}"
+          if(REMOVE_FLAG){
+            // sh 'docker container ls -aq --format {{.ID}} --filter name=smc-zuul-ctn | xargs docker container rm -f'
+            // sh 'docker container rm -f $(docker container ls -aq --format {{.ID}} --filter name=.*smc-zuul-ctn.*)'
+            sh 'docker container rm -f $(docker container ls -aq --filter name=.*smc-zuul-ctn.*)'
+          }
+        }
+
+        // docker rmi old images: remove only there are images found
+        script {
+          def REMOVE_FLAG = sh(returnStdout: true, script: "docker image ls -q *${DOCKHUB_USERNAME}/smc-zuul-srv*") != ""
+          echo "REMOVE_FLAG: ${REMOVE_FLAG}"
+          if(REMOVE_FLAG){
+            // sh 'docker image ls --format {{.ID}} *${DOCKHUB_USERNAME}/smc-zuul-srv* | xargs docker image rm -f'
+            // sh 'docker image rm -f $(docker image ls --format {{.ID}} *${DOCKHUB_USERNAME}/smc-zuul-srv*)'
+            // sh 'docker image rm -f $(docker image ls -q *${DOCKHUB_USERNAME}/smc-zuul-srv*)'
+          }
+        }
+
+        // docker pull image from docker hub registry
+        // sh 'docker pull ${DOCKHUB_USERNAME}/smc-zuul-srv'
+
+        // docker run images
+        sh 'docker run -d -p 8888:8888 -v smc-data:/smc-data --network smc-net --name smc-zuul-ctn ${DOCKHUB_USERNAME}/smc-zuul-srv -Xms128m -Xmx128m'
+      }
+    }
 
     stage('clean workspace') {
       agent any
