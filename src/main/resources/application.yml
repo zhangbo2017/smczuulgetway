@@ -5,7 +5,7 @@ spring:
     name: SMC-Zuul-Getway
 
 server:
-  port: 80
+  port: 8888
 
 zuul:
   # 所谓敏感，也即是在转发时要删除的设置
