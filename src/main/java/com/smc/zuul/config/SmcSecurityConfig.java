@@ -62,7 +62,6 @@ public class SmcSecurityConfig extends WebSecurityConfigurerAdapter{
 		    .and().exceptionHandling().accessDeniedHandler(smcAccessDeniedHandler).authenticationEntryPoint(smcAuthenticationEntryPoint) //
 		    .and().authorizeRequests() // enable authorize HttpServletRequest
 		    .antMatchers("/login").permitAll() // permit for login
-		    .antMatchers("/sayhello").permitAll()
 		    .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // 给所有预请求方法放行
 		    .antMatchers("/admin/**").hasRole("admin") // only allowed for role "admin" case-sensitive
 //		    .antMatchers("api/smc/secure/user/**").hasAnyRole("admin", "user") // only allowed for roles "admin", "user" case-sensitive
